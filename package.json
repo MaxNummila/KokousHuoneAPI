@@ -1,0 +1,17 @@
+{
+  "name": "kokoushuone-api",
+  "version": "1.0.0",
+  "description": "Yksinkertainen varausrajapinta",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test-flow": "bash test_api.sh"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.0.0",
+    "express": "^4.19.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
