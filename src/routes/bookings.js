@@ -1,8 +1,20 @@
 const express = require('express');
 const BookingService = require('../services/bookingService');
 const AppError = require('../utils/appError');
+const rateLimit = require('express-rate-limit');
 
 const router = express.Router();
+
+// Booking rate limiter
+const bookingsLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 50,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Liian monta pyyntöä, yritä myöhemmin uudelleen." },
+});
+// Use limiter on all /bookings routes
+router.use(bookingsLimiter);
 
 // POST /bookings
 router.post('/', (req, res, next) => {
