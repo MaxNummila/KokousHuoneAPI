@@ -1,7 +1,8 @@
 const bookingsData = require('../data/bookings');
+const AppError = require('../utils/appError');
 
 const BookingService = {
-  // Apufunktio päällekkäisyyden tarkistukseen
+    // Apufunktio päällekkäisyyden tarkistukseen
   isOverlapping(room, start, end) {
     return bookingsData.isOverlapping(room, start, end);
   },
@@ -10,17 +11,16 @@ const BookingService = {
     const now = new Date().toISOString();
 
     if (start_time >= end_time) {
-      throw new Error("Aloitusajan on oltava ennen lopetusaikaa.");
+      throw new AppError(400, "Aloitusajan on oltava ennen lopetusaikaa.");
     }
     if (start_time < now) {
-      throw new Error("Varaus ei voi olla menneisyydessä.");
+      throw new AppError(400, "Varaus ei voi olla menneisyydessä.");
     }
     if (this.isOverlapping(room_name, start_time, end_time)) {
-      throw new Error("Huone on jo varattu kyseisenä aikana.");
+      throw new AppError(409, "Huone on jo varattu kyseisenä aikana.");
     }
 
     const info = bookingsData.createBooking(room_name, start_time, end_time);
-
     return { id: info.lastInsertRowid, room_name, start_time, end_time };
   },
 
