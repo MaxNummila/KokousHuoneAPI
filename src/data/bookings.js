@@ -21,7 +21,7 @@ const createBooking = (room_name, start_time, end_time, created_by) => {
 // List
 const getBookingsByRoom = (room_name) => {
   return db.prepare(
-    'SELECT * FROM bookings WHERE room_name = ? ORDER BY start_time ASC'
+    'SELECT id, room_name, start_time, end_time FROM bookings WHERE room_name = ? ORDER BY start_time ASC'
   ).all(room_name);
 };
 

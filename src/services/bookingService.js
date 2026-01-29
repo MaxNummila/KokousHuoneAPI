@@ -24,7 +24,7 @@ const BookingService = {
     }
 
     const info = bookingsData.createBooking(room_name, start_time, end_time, created_by);
-    return { id: info.lastInsertRowid, room_name, start_time, end_time, created_by };
+    return { id: info.lastInsertRowid, room_name, start_time, end_time };
   },
 
   getBookingsByRoom(room_name) {
