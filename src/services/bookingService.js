@@ -1,6 +1,14 @@
 const bookingsData = require('../data/bookings');
 const AppError = require('../utils/appError');
 
+const parseDateTime = (value, fieldName) => {
+  const ms = Date.parse(value);
+  if (Number.isNaN(ms)){
+    throw new AppError(400, `Virheellinen aikamuoto kentässä ${fieldName}. Käytä esim. 2026-10-10T10:00:00.`);
+  }
+  return ms;
+}
+
 const BookingService = {
     // Apufunktio päällekkäisyyden tarkistukseen
   isOverlapping(room, start, end) {
@@ -8,12 +16,14 @@ const BookingService = {
   },
 
   createBooking(room_name, start_time, end_time, created_by) {
-    const now = new Date().toISOString();
+    const nowMs = Date.now();
+    const startMs = parseDateTime(start_time, "start_time");
+    const endMs = parseDateTime(end_time, "end_time");
 
-    if (start_time >= end_time) {
+    if (startMs >= endMs) {
       throw new AppError(400, "Aloitusajan on oltava ennen lopetusaikaa.");
     }
-    if (start_time < now) {
+    if (startMs < nowMs) {
       throw new AppError(400, "Varaus ei voi olla menneisyydessä.");
     }
     if (this.isOverlapping(room_name, start_time, end_time)) {
