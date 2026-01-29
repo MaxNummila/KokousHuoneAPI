@@ -7,7 +7,8 @@ db.exec(`
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     room_name TEXT NOT NULL,
     start_time DATETIME NOT NULL,
-    end_time DATETIME NOT NULL
+    end_time DATETIME NOT NULL,
+    created_by TEXT NOT NULL
   )
 `);
 

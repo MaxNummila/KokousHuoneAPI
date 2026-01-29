@@ -12,10 +12,10 @@ const isOverlapping = (room, start, end) => {
 };
 
 // Insert
-const createBooking = (room_name, start_time, end_time) => {
+const createBooking = (room_name, start_time, end_time, created_by) => {
   return db.prepare(
-    'INSERT INTO bookings (room_name, start_time, end_time) VALUES (?, ?, ?)'
-  ).run(room_name, start_time, end_time);
+    'INSERT INTO bookings (room_name, start_time, end_time, created_by) VALUES (?, ?, ?, ?)'
+  ).run(room_name, start_time, end_time, created_by);
 };
 
 // List
@@ -23,6 +23,10 @@ const getBookingsByRoom = (room_name) => {
   return db.prepare(
     'SELECT * FROM bookings WHERE room_name = ? ORDER BY start_time ASC'
   ).all(room_name);
+};
+
+const getBookingById = (id) => {
+  return db.prepare('SELECT * FROM bookings WHERE id = ?').get(id);
 };
 
 // Delete
@@ -34,5 +38,6 @@ module.exports = {
   isOverlapping,
   createBooking,
   getBookingsByRoom,
-  deleteBooking
+  deleteBooking,
+  getBookingById
 };

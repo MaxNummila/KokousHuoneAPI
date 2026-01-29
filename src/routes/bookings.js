@@ -2,6 +2,7 @@ const express = require('express');
 const BookingService = require('../services/bookingService');
 const AppError = require('../utils/appError');
 const rateLimit = require('express-rate-limit');
+const adminKey = process.env.ADMIN_KEY || "";
 
 const router = express.Router();
 
@@ -23,7 +24,8 @@ router.post('/', (req, res, next) => {
     if (!room_name || !start_time || !end_time) {
       throw new AppError(400, "Puuttuvia tietoja.");
     }
-    const booking = BookingService.createBooking(room_name, start_time, end_time);
+    const created_by = req.header("X-User-Id");
+    const booking = BookingService.createBooking(room_name, start_time, end_time, created_by);
     res.status(201).json(booking);
   } catch (err) {
     next(err);
@@ -43,10 +45,18 @@ router.get('/:room_name', (req, res, next) => {
 // DELETE /bookings/:id
 router.delete('/:id', (req, res, next) => {
   try {
-    const success = BookingService.deleteBooking(req.params.id);
+    const userId = req.header("X-User-Id");
+    const adminHeader = req.header("X-Admin-Key") || "";
+    const isAdmin = adminKey && adminHeader === adminKey;
+    
+    const success = BookingService.deleteBooking(req.params.id, userId, isAdmin);
     if (!success) {
       throw new AppError(404, "Varausta ei löytynyt.");
     }
+    if (!userId && !isAdmin) {
+      throw new AppError(401, "X-User-Id tai X-Admin-Key vaaditaan.");
+    }
+
     res.json({ message: "Varaus peruttu." });
   } catch (err) {
     next(err);
