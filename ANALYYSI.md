@@ -1,5 +1,5 @@
 1. Mitä tekoäly teki hyvin?
-Mielestäni se sai aikaan oikein toimivan, sekä vaatimukset täyttävän APIn, joka minun lisätyllä pyynnöllä oli myös aika hyvin jaettu osiin. Tärkein sekä yllättävin oli se että se sai heti aikaan koodia joka onnistui kaikissa vaatimuksissa. Myös myöhemmät testit jotka se kirjoitti toimivat hienosti, ja se ymmärsi hyvin minun koodin toiminnan, vaikka en antanut kuvaa minun kansioista. 
+Mielestäni se sai aikaan oikein toimivan, sekä vaatimukset täyttävän APIn, joka minun lisätyllä pyynnöllä oli myös aika hyvin jaettu osiin. Tärkein sekä yllättävin oli se että se sai heti aikaan koodia joka onnistui kaikissa vaatimuksissa. Myös myöhemmät testit jotka se kirjoitti toimivat hienosti, ja se ymmärsi hyvin minun koodin toiminnan, vaikka en antanut kuvaa minun kansioista. Olin myös positiivisesti yllättynyt että se heti antoi testin APIa varten.
 
 2. Mitä tekoäly teki huonosti?
 Se ei tehnyt minkäänkaltaisia oletuksia järjestelmästä joten sen tekemä API toimi siten, että kuka tahansa pystyi poistamaan varauksen. Se myös käytti heikkoa tapaa lukea päivämääriä. Kommentit olisivat myös voineet olla kattavampia mutta en itsekkään niihin laittanut paljoa aikaa tässä tehtävässä.
