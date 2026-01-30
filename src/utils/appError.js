@@ -1,3 +1,4 @@
+// Virheiden standardointi tiettyyn muotoon.
 class appError extends Error {
   constructor(status, message) {
     super(message);

@@ -1,7 +1,7 @@
 const Database = require('better-sqlite3');
 const db = new Database(':memory:');
 
-// Luodaan taulu
+// Luo tietokantaan taulun
 db.exec(`
   CREATE TABLE IF NOT EXISTS bookings (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

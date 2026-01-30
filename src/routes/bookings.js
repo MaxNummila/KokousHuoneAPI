@@ -6,7 +6,7 @@ const adminKey = process.env.ADMIN_KEY || "";
 
 const router = express.Router();
 
-// Booking rate limiter
+// Booking rate limiter, määrittää rajan pyynnöille joita voi valitun ajan aikana tehdä
 const bookingsLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
   max: 50,
@@ -14,10 +14,10 @@ const bookingsLimiter = rateLimit({
   legacyHeaders: false,
   message: { error: "Liian monta pyyntöä, yritä myöhemmin uudelleen." },
 });
-// Use limiter on all /bookings routes
+// Käytä rajoitusta kaikissa /bookings reiteissä
 router.use(bookingsLimiter);
 
-// POST /bookings
+// POST /bookings, post varauksen luontia varten
 router.post('/', (req, res, next) => {
   try {
     const { room_name, start_time, end_time } = req.body;
@@ -32,7 +32,7 @@ router.post('/', (req, res, next) => {
   }
 });
 
-// GET /bookings/:room_name
+// GET /bookings/:room_name, get varauksen hakua varten
 router.get('/:room_name', (req, res, next) => {
   try {
     const bookings = BookingService.getBookingsByRoom(req.params.room_name);
@@ -42,7 +42,7 @@ router.get('/:room_name', (req, res, next) => {
   }
 });
 
-// DELETE /bookings/:id
+// DELETE /bookings/:id, delete varauksen poistoa varten
 router.delete('/:id', (req, res, next) => {
   try {
     const userId = req.header("X-User-Id");
